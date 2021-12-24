@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+  mayhem:
+    image: mayhem:latest
+    container_name: mayhem
+    ports:
+      - 8001:8001
+    volumes:
+      - ./app:/app/app
+      - ./logs:/app/logs
+    environment:
+      - APP_MODULE=app.api:app
+      - PORT=8001
+      - ACCESS_LOG=/app/logs/fastapi.log
+      - WEB_CONCURRENCY=1
+    command: watchmedo auto-restart -p '*.py' -R -- /start.sh
